@@ -1,1 +1,57 @@
+#include <Arduino.h>
 
+#define beam 13
+#define button 32
+#define alarm 27
+#define relay1 25   //Lig 
+//#define relay2 33   //Door sensor
+
+  int alarm_pin=0;
+  int beam_pin=0;
+  int button_pin =0;
+  int lank = 1000;
+    
+void setup() {
+  pinMode(beam, INPUT);
+  pinMode(button, INPUT);
+  pinMode(alarm, INPUT);
+  pinMode(relay1, OUTPUT);
+  //pinMode(relay2, OUTPUT);
+}
+
+void loop() {
+  alarm_pin = digitalRead(alarm);
+  //beam_pin=digitalRead(beam);
+  //button_pin=digitalRead(button);
+  digitalWrite(relay1, HIGH);
+  //digitalWrite(relay2, LOW);
+
+    if(alarm_pin==1){
+        alarmflash();
+    }
+        
+}
+
+
+
+void ligteaan(int wag){
+ 
+    digitalWrite(relay1, LOW);
+    delay(wag);
+    digitalWrite(relay1, HIGH);
+}
+
+void alarmflash(){
+     delay(600);
+     alarm_pin = digitalRead(alarm);
+      if(alarm_pin==1){
+        ligteaan(500);
+        delay(500);
+        ligteaan(500);
+        delay(500);
+        ligteaan(500);
+        delay(500);
+        ligteaan(120000);
+      }
+        ligteaan(2000);
+}
